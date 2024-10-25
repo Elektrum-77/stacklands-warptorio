@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://dcye28gmfwmy7"]
+
+[ext_resource type="PackedScene" uid="uid://bi5osxsx2bvej" path="res://world_mouse.tscn" id="1_co2sb"]
+[ext_resource type="Script" path="res://camera_mouse_ray_cast.gd" id="1_qmtko"]
+[ext_resource type="Script" path="res://drag_and_drop.gd" id="2_kdnkh"]
+[ext_resource type="PackedScene" uid="uid://dwwh17qotbry6" path="res://card/card.tscn" id="4_2biw5"]
+[ext_resource type="Script" path="res://game_cards.gd" id="4_rwie3"]
+[ext_resource type="Resource" uid="uid://breae0fdmis5k" path="res://data/resource/wood.tres" id="6_tqsv8"]
+[ext_resource type="PackedScene" uid="uid://bh81u01463ksx" path="res://card/survivor.tscn" id="7_mpdhi"]
+[ext_resource type="PackedScene" uid="uid://d2is5y62iwnoy" path="res://card/enemy.tscn" id="8_5c1od"]
+
+[sub_resource type="Environment" id="Environment_nmf8t"]
+ambient_light_color = Color(1, 1, 1, 1)
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v27dt"]
+albedo_color = Color(0.4, 0.533333, 0.294118, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8p0sh"]
+material = SubResource("StandardMaterial3D_v27dt")
+size = Vector2(20, 20)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_vj1a6"]
+
+[node name="Game" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.5, 0.612372, 0.612372, 6.18172e-08, -0.707107, 0.707107, 0.866025, 0.353553, 0.353553, -14, 18, 9)
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nmf8t")
+
+[node name="CameraMouseRayCast" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -1, 18, 0)
+fov = 80.0
+script = ExtResource("1_qmtko")
+
+[node name="WorldRayCast" type="RayCast3D" parent="CameraMouseRayCast"]
+visible = false
+collision_mask = 4
+
+[node name="CardRayCast" type="RayCast3D" parent="CameraMouseRayCast"]
+collision_mask = 2
+
+[node name="WorldMouse" parent="." node_paths=PackedStringArray("camera", "world_ray_cast", "card_ray_cast") instance=ExtResource("1_co2sb")]
+camera = NodePath("../CameraMouseRayCast")
+world_ray_cast = NodePath("../CameraMouseRayCast/WorldRayCast")
+card_ray_cast = NodePath("../CameraMouseRayCast/CardRayCast")
+
+[node name="Board" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Plane" type="MeshInstance3D" parent="Board"]
+mesh = SubResource("PlaneMesh_8p0sh")
+
+[node name="WorldBorder" type="CollisionShape3D" parent="Board"]
+shape = SubResource("WorldBoundaryShape3D_vj1a6")
+
+[node name="Cards" type="Node" parent="."]
+script = ExtResource("4_rwie3")
+
+[node name="Card" parent="Cards" instance=ExtResource("4_2biw5")]
+resource = ExtResource("6_tqsv8")
+
+[node name="Card2" parent="Cards" instance=ExtResource("4_2biw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="Survivor" parent="Cards" instance=ExtResource("7_mpdhi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+axis_lock_linear_y = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+
+[node name="Enemy" parent="Cards" instance=ExtResource("8_5c1od")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 7)
+axis_lock_linear_y = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
+
+[node name="StarterCard" type="Node" parent="."]
+
+[node name="DragAndDrop" type="Node" parent="." node_paths=PackedStringArray("world_mouse")]
+script = ExtResource("2_kdnkh")
+world_mouse = NodePath("../WorldMouse")

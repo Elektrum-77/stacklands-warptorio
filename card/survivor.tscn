@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh81u01463ksx"]
+
+[ext_resource type="PackedScene" uid="uid://dwwh17qotbry6" path="res://card/card.tscn" id="1_absaq"]
+[ext_resource type="Script" path="res://card/survivor_craft.gd" id="2_d6lq4"]
+[ext_resource type="Resource" uid="uid://cujyu8nq1ul2l" path="res://data/craft_list/survivor.tres" id="3_cdfac"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ugosw"]
+albedo_color = Color(1, 0.563935, 0.118562, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_acid4"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ugosw")
+size = Vector3(4, 0.1, 5)
+
+[node name="Survivor" instance=ExtResource("1_absaq")]
+
+[node name="Model" parent="." index="1"]
+mesh = SubResource("BoxMesh_acid4")
+
+[node name="SurvivorCrafting" type="Timer" parent="." index="3"]
+unique_name_in_owner = true
+one_shot = true
+script = ExtResource("2_d6lq4")
+crafts = ExtResource("3_cdfac")
+
+[connection signal="added" from="Stack" to="SurvivorCrafting" method="_on_updated"]
+[connection signal="extracted" from="Stack" to="SurvivorCrafting" method="_on_extracted"]
+[connection signal="splitted" from="Stack" to="SurvivorCrafting" method="_on_updated"]
+[connection signal="timeout" from="SurvivorCrafting" to="SurvivorCrafting" method="_on_timeout"]

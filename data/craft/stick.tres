@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Craft" load_steps=6 format=3 uid="uid://buuvteknf3c8p"]
+
+[ext_resource type="Script" path="res://game/game_resource.gd" id="1_17m7a"]
+[ext_resource type="Resource" uid="uid://breae0fdmis5k" path="res://data/resource/wood.tres" id="2_eleg1"]
+[ext_resource type="Script" path="res://card/spawner/spawner_resource.gd" id="3_sbvoq"]
+[ext_resource type="Script" path="res://craft.gd" id="3_wj55l"]
+
+[sub_resource type="Resource" id="Resource_kd43q"]
+script = ExtResource("3_sbvoq")
+resource = ExtResource("2_eleg1")
+
+[resource]
+script = ExtResource("3_wj55l")
+consumed = Array[ExtResource("1_17m7a")]([ExtResource("2_eleg1")])
+result = SubResource("Resource_kd43q")
+time = 0.0

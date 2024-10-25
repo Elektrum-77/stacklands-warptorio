@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameResource" load_steps=3 format=3 uid="uid://breae0fdmis5k"]
+
+[ext_resource type="Script" path="res://game/game_resource.gd" id="1_sv4pi"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ok5ol"]
+size = Vector2(400, 500)
+
+[resource]
+script = ExtResource("1_sv4pi")
+name = "wood"
+sprite = SubResource("PlaceholderTexture2D_ok5ol")

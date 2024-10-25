@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi5osxsx2bvej"]
+
+[ext_resource type="Script" path="res://world_mouse.gd" id="1_wxncj"]
+[ext_resource type="Script" path="res://world_mouse_debug_model.gd" id="2_10y5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lktox"]
+albedo_color = Color(1, 0.682353, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vhbv3"]
+material = SubResource("StandardMaterial3D_lktox")
+
+[node name="WorldMouse" type="Node3D"]
+script = ExtResource("1_wxncj")
+
+[node name="DebugModel" type="MeshInstance3D" parent="." node_paths=PackedStringArray("world_mouse")]
+unique_name_in_owner = true
+mesh = SubResource("SphereMesh_vhbv3")
+script = ExtResource("2_10y5w")
+world_mouse = NodePath("..")
+hovering_color = Color(1, 0, 0, 1)

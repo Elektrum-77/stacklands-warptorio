@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2is5y62iwnoy"]
+
+[ext_resource type="PackedScene" uid="uid://dwwh17qotbry6" path="res://card/card.tscn" id="1_fvhuv"]
+[ext_resource type="Script" path="res://card/ai.gd" id="2_qcx24"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pgolq"]
+resource_local_to_scene = true
+size = Vector3(4, 0.1, 5)
+
+[node name="Enemy" instance=ExtResource("1_fvhuv")]
+
+[node name="Model" parent="." index="1"]
+mesh = SubResource("BoxMesh_pgolq")
+
+[node name="AI" type="Timer" parent="." index="3"]
+one_shot = true
+autostart = true
+script = ExtResource("2_qcx24")
+
+[connection signal="timeout" from="AI" to="AI" method="_on_timeout"]

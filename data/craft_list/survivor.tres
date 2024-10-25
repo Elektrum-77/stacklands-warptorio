@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CraftList" load_steps=4 format=3 uid="uid://cujyu8nq1ul2l"]
+
+[ext_resource type="Script" path="res://craft.gd" id="1_xk8yr"]
+[ext_resource type="Resource" uid="uid://buuvteknf3c8p" path="res://data/craft/stick.tres" id="2_hhj0v"]
+[ext_resource type="Script" path="res://craft_list.gd" id="3_80yuq"]
+
+[resource]
+script = ExtResource("3_80yuq")
+items = Array[ExtResource("1_xk8yr")]([ExtResource("2_hhj0v")])

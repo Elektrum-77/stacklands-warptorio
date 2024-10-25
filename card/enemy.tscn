@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2is5y62iwnoy"]
+
+[ext_resource type="PackedScene" uid="uid://dwwh17qotbry6" path="res://card/card.tscn" id="1_fvhuv"]
+[ext_resource type="Script" path="res://card/ai.gd" id="2_qcx24"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1k4q"]
+albedo_color = Color(0.669716, 0.0914639, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pgolq"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_y1k4q")
+size = Vector3(4, 0.1, 5)
+
+[node name="Enemy" instance=ExtResource("1_fvhuv")]
+is_draggable = false
+
+[node name="Model" parent="." index="1"]
+mesh = SubResource("BoxMesh_pgolq")
+
+[node name="AI" type="Timer" parent="." index="3"]
+one_shot = true
+autostart = true
+script = ExtResource("2_qcx24")
+distance = 5.0
+speed = 1.0
+
+[connection signal="timeout" from="AI" to="AI" method="_on_timeout"]
